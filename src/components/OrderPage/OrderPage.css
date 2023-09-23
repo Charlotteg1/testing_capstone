@@ -1,0 +1,29 @@
+.confirm-item-button::after,
+.unpack-item-button::after{
+    content:attr(data-id);
+    position: absolute;
+    margin-top: -5px;
+    transform: translateX(10px);
+    background: rgba(61, 64, 61, 0.289);
+    color: rgb(0, 0, 0);
+    padding: 3px;
+    border: 2px solid  #999292;
+    border-radius: 3px;
+    opacity: 0;
+    transition: 0.5s opacity;
+    width: 150px;
+    height: auto;
+    transition-delay: 0.35s;
+  }
+  
+.confirm-item-button:hover::after,
+.unpack-item-button:hover::after{
+    opacity: 1;
+    transition-delay: 1.8s;
+  }
+
+.confirm-item-button,
+.unpack-item-button {
+    background-color: rgb(150, 162, 162);
+} 
+
