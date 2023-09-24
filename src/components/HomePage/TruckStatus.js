@@ -14,7 +14,6 @@ const TruckStatus=({truckList})=>{
   
     return(<div className="trucks">
         {mappedTrucks}
-        
         <Modal/>
     </div>)
 }

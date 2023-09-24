@@ -3,7 +3,7 @@ import TruckStatus from "./TruckStatus";
 import "./HomePage.css";
 
 const HomePage = ({currentOrder, truckList}) => {
-
+    
     return(<>
         <Link to="/OrderListPage">view order page</Link>
         <br/>

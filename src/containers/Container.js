@@ -17,45 +17,39 @@ const Container = () => {
         const data = await response.json();
         setOrderList(data);
     }
-
     useEffect(()=>{
         fetchOrders();
-    },[orderList])
-
-    // //fetch individual order
-    // const fetchOrder = async (id) =>{
-    //     const response = await fetch("http://localhost:8080/orders/"+ id);
-    //     const data = await response.json();
-    //     setCurrentOrder(data);
-    //     console.log(data)
-    // }
+    },[])
 
      const fetchTrucks = async (id) =>{
         const response = await fetch("http://localhost:8080/trucks");
         const data = await response.json();
         setTruckList(data);
     }
-
     useEffect(()=>{
         fetchTrucks();
-    },[truckList])
+    },[])
 
-    const updateOrderStatus = async (orderId, truckId, status) => {
+    const updateOrderStatus = async (orderId,truckId, status) => {
         const url = `http://localhost:8080/orders/updateOrderStatus?orderId=${orderId}&employeeId=${employeeId}&truckId=${truckId}&status=${status}`;
         const response = await fetch(url, {method: "PATCH",headers: {"Content-Type": "application/json"}})
-        ;}
+        console.log("changed status");
+        fetchOrders()
+    }
 
-    const decreaseStockLevel = async (orderId) => {
-        const url = `http://localhost:8080/products/decreaseStockLevel?orderId=${orderId}`;
+    const decreaseStockLevel = async () => {
+        const url = `http://localhost:8080/products/decreaseStockLevel?orderId=${currentOrder.id}`;
         const response = await fetch(url, {method: "PATCH",headers: {"Content-Type": "application/json"}})
-        ;}
+        console.log("decreased stock level");
+        fetchOrders()
+    }
 
     return(
         <div>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<HomePage currentOrder={currentOrder} truckList={truckList}/>} key={1} />
-                    <Route path="/OrderListPage" element={<OrderListPage updateOrderStatus={updateOrderStatus} orderList={orderList}/>} key={2} />
+                    <Route path="/OrderListPage" element={<OrderListPage updateOrderStatus={updateOrderStatus} orderList={orderList} setCurrentOrder={setCurrentOrder} />} key={2} />
                     <Route path="/OrderPage/:id" element={<OrderPage decreaseStockLevel={decreaseStockLevel} updateOrderStatus={updateOrderStatus} orderList={orderList} currentOrder={currentOrder} setCurrentOrder={setCurrentOrder}/>} key={3} />
                 </Routes>
             </BrowserRouter>

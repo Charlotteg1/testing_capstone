@@ -1,5 +1,5 @@
 import Product from "./Product";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ProductList = ({decreaseStockLevel,currentOrder, updateOrderStatus, setCurrentOrder}) => {
@@ -8,24 +8,31 @@ const ProductList = ({decreaseStockLevel,currentOrder, updateOrderStatus, setCur
     const [numberProductsPacked, setNumberProductsPacked]= useState(0);
     const [isOrderPackingComplete, setIsOrderPackingComplete]= useState(false);
     const [isModalOpen, setIsModalOpen]= useState(false)
+    const [sortedProductList, setSortedProductList] = useState([])
 
-    if (!currentOrder || !currentOrder.products) {
-        return <p>Loading...</p>;
+    const sortProductList = () =>{ 
+        if (!currentOrder || !currentOrder.products) {
+            return <p>Loading...</p>;
+        }
+        const clonedProductList= [...currentOrder.products];
+        clonedProductList.sort((product1,product2)=>{
+            const number1=product1.productLocation.substring(1);
+            const number2=product2.productLocation.substring(1);
+            return number2-number1; // sorts number location in decending order.
+            //(after it being alphabetically cloned)
+        })
+        clonedProductList.sort((product1,product2)=>{
+            const charcode1=product1.productLocation.charCodeAt(0);
+            const charcode2=product2.productLocation.charCodeAt(0);
+            return charcode1-charcode2;// sorts from A-Z
+        })
+        setSortedProductList(clonedProductList)
     }
 
-    const sortedProductList= [...currentOrder.products];
-    sortedProductList.sort((product1,product2)=>{
-        const charcode1=product1.productLocation.charCodeAt(0);
-        const charcode2=product2.productLocation.charCodeAt(0);
-        return charcode1-charcode2;// sorts from A-Z
-    })
-    sortedProductList.sort((product1,product2)=>{
-        const number1=product1.productLocation.substring(1);
-        const number2=product2.productLocation.substring(1);
-        return number2-number1; // sorts number location in decending order.
-        //(after it being alphabetically sorted)
-    })
-
+    useEffect(() => {
+        sortProductList();
+    }, [currentOrder]);
+   
     const handleComplete=() =>{
         setIsOrderPackingComplete(!isOrderPackingComplete)
     }
@@ -40,13 +47,12 @@ const ProductList = ({decreaseStockLevel,currentOrder, updateOrderStatus, setCur
 
     const handleCompletedOrder=()=>{
         // const truckId = currentOrder.truck.id;
-        console.log("Open Modal clicked");
         setIsModalOpen(true);
     }
 
     const handleConfirm=()=>{
-        updateOrderStatus(currentOrder.id,1,"FINISHED")
-        decreaseStockLevel(currentOrder.id)
+        updateOrderStatus(currentOrder.id, 1,"FINISHED")
+        decreaseStockLevel()
         navigate("/");
         setIsModalOpen(false)
         setCurrentOrder(null);
@@ -60,7 +66,7 @@ const ProductList = ({decreaseStockLevel,currentOrder, updateOrderStatus, setCur
     {isModalOpen && ( 
             <div className="confirm-modal" >
                 <div className="confirm-modal-content">
-                    <h2>Please load into truck {currentOrder.truck.id}</h2>
+                    <h2>Please load into truck {"1"}</h2>
                     <div className="iframe"><iframe src="https://giphy.com/embed/QyKHaxxc4XvYo1jt4b"></iframe><div className="iframe-overlay"></div></div>
                     <button className="confirm" onClick={()=>handleConfirm()}>
                       Confirm

@@ -1,28 +1,37 @@
+import { useEffect, useState } from "react";
 import Order from "./Order";
 
-const OrderList = ({orderList, updateOrderStatus}) => {
-     // sort by date then by priority 
-    const sortedOrderList= [...orderList];
-    
+const OrderList = ({setCurrentOrder, orderList, updateOrderStatus}) => {
+ 
+    // sort by date then by priority 
+    const [sortedOrderList, setSortedOrderList] = useState([]);
+
+    const sortList=() =>{
+        const clonedList = [...orderList];
+     //within the date sorts by priority
+    clonedList.sort((order1,order2)=>{
+        return order1.orderPriority? -1 : 1;
+    });
     // sorts by date first, furthest back first (ascending order)
-    sortedOrderList.sort((order1,order2)=>{
+    clonedList.sort((order1,order2)=>{
     const date1 = new Date(order1.date).getTime();
     const date2 = new Date(order2.date).getTime();
     return date1 - date2;
-    });
-
-    //within the date sorts by priority
-    sortedOrderList.sort((order1,order2)=>{
-        return order1.orderPriority? -1 : 1;
     })
-    
+    setSortedOrderList(clonedList);}
+
     const mappedOrders = sortedOrderList.map((order) => (
         <div className="orders-box" >
-             <Order order={order} updateOrderStatus={updateOrderStatus} key={order.id}/>
+             <Order setCurrentOrder={setCurrentOrder} order={order} updateOrderStatus={updateOrderStatus} key={order.id}/>
         </div>
     ));
    
+   useEffect(() => {
+        sortList();
+      }, [orderList]);
 
-    return <div>{mappedOrders}</div>;
+    return(<div>
+        {mappedOrders}
+        </div>);
 }
 export default OrderList;

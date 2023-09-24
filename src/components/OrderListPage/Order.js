@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 
-const Order = ({order, updateOrderStatus}) => {
+const Order = ({setCurrentOrder, order, updateOrderStatus}) => {
 
-const handlePackOrder=()=>{
+const handlePackOrder= async ()=>{
+    await setCurrentOrder(order)
     updateOrderStatus(order.id,1,"ONGOING")
 }
-
     return(<>
     <div>
-    <h2>{order.id}</h2>
+    <p>order id : {order.id}</p>
     <p>Number of products:{order.products.length}</p>
     <p>{order.orderPriority ? "priority" : "non-priority"}</p>
     <p>{order.date}</p>

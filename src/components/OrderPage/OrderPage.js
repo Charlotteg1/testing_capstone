@@ -6,11 +6,9 @@ import { Link } from "react-router-dom";
 const OrderPage = ({decreaseStockLevel, orderList,currentOrder, setCurrentOrder, updateOrderStatus}) => {
 
     const { id } = useParams();
-
     const findOrderById = (orderList, id) => {
         return orderList.find((order) => order.id === Number(id));
     };
-
     const foundOrder = findOrderById(orderList, id);
 
     useEffect(() => {
