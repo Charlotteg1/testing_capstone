@@ -1,5 +1,5 @@
 import Product from "./Product";
-import { useState , useEffect} from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ProductList = ({currentOrder, updateOrderStatus, setCurrentOrder}) => {
@@ -59,4 +59,5 @@ export default ProductList;
 // need to remove complete order when a unpack item button has been clicked : done
 // needs to save what is packed in order when going back to the page from the home page for example
 // be able to calculate orderSumSize for each order
+// sent a decrease stock patch
 // be able to assign truck and employee id when orderStatus changes to OnGoing

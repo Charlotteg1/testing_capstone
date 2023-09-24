@@ -20,7 +20,7 @@ const Container = () => {
 
     useEffect(()=>{
         fetchOrders();
-    },[orderList])
+    },[])
 
     // //fetch individual order
     // const fetchOrder = async (id) =>{
@@ -34,19 +34,23 @@ const Container = () => {
         const response = await fetch("http://localhost:8080/trucks");
         const data = await response.json();
         setTruckList(data);
+        console.log(data)
     }
+
+    useEffect(()=>{
+        fetchTrucks();
+    },[])
 
     const updateOrderStatus = async (orderId, truckId, status) => {
         const url = `http://localhost:8080/orders/updateOrderStatus?orderId=${orderId}&employeeId=${employeeId}&truckId=${truckId}&status=${status}`;
-        const response = await fetch(url, {method: "PATCH",headers: {"Content-Type": "application/json"}
-        })
+        const response = await fetch(url, {method: "PATCH",headers: {"Content-Type": "application/json"}})
         ;}
 
     return(
         <div>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<HomePage currentOrder={currentOrder}/>} key={1} />
+                    <Route path="/" element={<HomePage currentOrder={currentOrder} truckList={truckList}/>} key={1} />
                     <Route path="/OrderListPage" element={<OrderListPage updateOrderStatus={updateOrderStatus} orderList={orderList}/>} key={2} />
                     <Route path="/OrderPage/:id" element={<OrderPage updateOrderStatus={updateOrderStatus} orderList={orderList} currentOrder={currentOrder} setCurrentOrder={setCurrentOrder}/>} key={3} />
                 </Routes>
