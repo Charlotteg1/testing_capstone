@@ -2,11 +2,12 @@ import Product from "./Product";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const ProductList = ({currentOrder, updateOrderStatus, setCurrentOrder}) => {
+const ProductList = ({decreaseStockLevel,currentOrder, updateOrderStatus, setCurrentOrder}) => {
 
     const navigate = useNavigate();
     const [numberProductsPacked, setNumberProductsPacked]= useState(0);
     const [isOrderPackingComplete, setIsOrderPackingComplete]= useState(false);
+    const [isModalOpen, setIsModalOpen]= useState(false)
 
     if (!currentOrder || !currentOrder.products) {
         return <p>Loading...</p>;
@@ -16,7 +17,7 @@ const ProductList = ({currentOrder, updateOrderStatus, setCurrentOrder}) => {
     sortedProductList.sort((product1,product2)=>{
         const charcode1=product1.productLocation.charCodeAt(0);
         const charcode2=product2.productLocation.charCodeAt(0);
-        return charcode1-charcode2;  // sorts from A-Z
+        return charcode1-charcode2;// sorts from A-Z
     })
     sortedProductList.sort((product1,product2)=>{
         const number1=product1.productLocation.substring(1);
@@ -38,11 +39,17 @@ const ProductList = ({currentOrder, updateOrderStatus, setCurrentOrder}) => {
     </div>))
 
     const handleCompletedOrder=()=>{
-        const truckId = currentOrder.truck.id;
-        updateOrderStatus(currentOrder.id,truckId,"FINISHED")
-        navigate("/");
-        setCurrentOrder(null);
+        // const truckId = currentOrder.truck.id;
+        console.log("Open Modal clicked");
+        setIsModalOpen(true);
+    }
 
+    const handleConfirm=()=>{
+        updateOrderStatus(currentOrder.id,1,"FINISHED")
+        decreaseStockLevel(currentOrder.id)
+        navigate("/");
+        setIsModalOpen(false)
+        setCurrentOrder(null);
     }
 
     return (<>
@@ -50,6 +57,18 @@ const ProductList = ({currentOrder, updateOrderStatus, setCurrentOrder}) => {
     <br/> 
     <br/>
     {isOrderPackingComplete? (<div><button onClick={()=>handleCompletedOrder()}> Order Complete </button></div>) : "please pack items into order"}
+    {isModalOpen && ( 
+            <div className="confirm-modal" >
+                <div className="confirm-modal-content">
+                    <h2>Please load into truck {currentOrder.truck.id}</h2>
+                    <div className="iframe"><iframe src="https://giphy.com/embed/QyKHaxxc4XvYo1jt4b"></iframe><div className="iframe-overlay"></div></div>
+                    <button className="confirm" onClick={()=>handleConfirm()}>
+                      Confirm
+                    </button>
+                </div>
+            </div>
+        )}
+    
     </>)
 
 }

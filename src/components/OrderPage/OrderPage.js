@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const OrderPage = ({orderList,currentOrder, setCurrentOrder, updateOrderStatus}) => {
+const OrderPage = ({decreaseStockLevel, orderList,currentOrder, setCurrentOrder, updateOrderStatus}) => {
 
     const { id } = useParams();
 
@@ -19,7 +19,7 @@ const OrderPage = ({orderList,currentOrder, setCurrentOrder, updateOrderStatus})
 
     return (<> 
     <Link to="/" >View home page</Link>
-    {currentOrder ? (<ProductList updateOrderStatus={updateOrderStatus} currentOrder={currentOrder} setCurrentOrder={setCurrentOrder}/>) : (<p>Loading .....</p>)}
+    {currentOrder ? (<ProductList decreaseStockLevel={decreaseStockLevel} updateOrderStatus={updateOrderStatus} currentOrder={currentOrder} setCurrentOrder={setCurrentOrder}/>) : (<p>Loading .....</p>)}
     </>)
 }
 export default OrderPage;

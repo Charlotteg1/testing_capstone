@@ -12,7 +12,7 @@ const Truck=({truck})=>{
     }
 
     return(<>
-        <p>{truck.id}</p>
+        <p>Truck {truck.id}</p>
         <label >Filled:</label>
         <meter className="truck-filled-meter" min="0" max={truck.maxCapacity} 
         low={truck.maxCapacity*0.4} high={truck.maxCapacity*0.7} optimum={truck.maxCapacity*0.8} value={calculateTruckFilled()}></meter>

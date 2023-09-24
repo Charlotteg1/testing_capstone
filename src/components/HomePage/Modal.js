@@ -6,13 +6,10 @@ const Modal = ({ children }) => {
 
   const openModal = () => {
     setIsOpen(true);
-    const button = document.querySelector(`.trucks`);
-    button.classList.add("clicked");
   };
 
   const closeModal = () => {
     setIsOpen(false);
-    console.log("hello ;)")
   };
   
   return (
