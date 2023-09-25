@@ -92,8 +92,21 @@
   z-index: 4; /* Ensure it covers the iframe */
 }
 
+.product-images {
+   width:200px;
+   height:auto;
+}
 
+.each-product-box {
+  border-radius: 3px;
+  border:solid #0c0a82;
+  width:max-content;
+  margin: 15px;
+  padding:10px
+}
 
-
-
-
+.order-complete-button {
+  width: 170px;
+  height:auto;
+  font-size: 70%;
+}

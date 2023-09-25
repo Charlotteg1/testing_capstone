@@ -4,6 +4,7 @@ const Order = ({setCurrentOrder, order, updateOrderStatus}) => {
 
 const handlePackOrder= async ()=>{
     await setCurrentOrder(order)
+    //need to calculate truck 
     updateOrderStatus(order.id,1,"ONGOING")
 }
     return(<>

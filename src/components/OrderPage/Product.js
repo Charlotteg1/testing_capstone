@@ -30,6 +30,7 @@ const Product = ({numberProductsPacked, setNumberProductsPacked, handleComplete,
    return(<>
    <p>{product.name}</p>
    <p>location in warehouse: {product.productLocation}</p>
+   <img className="product-images" src={`/productImages/${product.imageURL}`}/>
    <div className="item-pack-button">
    {isPacked ? (
           <button className="unpack-item-button" data-id="Click to undo" onClick={handleItemUnpacked}>Unpack Item</button>

@@ -51,8 +51,8 @@ const ProductList = ({decreaseStockLevel,currentOrder, updateOrderStatus, setCur
     }
 
     const handleConfirm=()=>{
-        updateOrderStatus(currentOrder.id, 1,"FINISHED")
         decreaseStockLevel()
+        updateOrderStatus(currentOrder.id, 1,"FINISHED")
         navigate("/");
         setIsModalOpen(false)
         setCurrentOrder(null);
@@ -62,7 +62,7 @@ const ProductList = ({decreaseStockLevel,currentOrder, updateOrderStatus, setCur
     {mappedProducts}
     <br/> 
     <br/>
-    {isOrderPackingComplete? (<div><button onClick={()=>handleCompletedOrder()}> Order Complete </button></div>) : "please pack items into order"}
+    {isOrderPackingComplete? (<div className="order-complete-button"><button onClick={()=>handleCompletedOrder()}> Order Complete </button></div>) : "please pack items into order"}
     {isModalOpen && ( 
             <div className="confirm-modal" >
                 <div className="confirm-modal-content">
@@ -84,5 +84,5 @@ export default ProductList;
 // need to remove complete order when a unpack item button has been clicked : done
 // needs to save what is packed in order when going back to the page from the home page for example
 // be able to calculate orderSumSize for each order
-// sent a decrease stock patch
+// sent a decrease stock patch done
 // be able to assign truck and employee id when orderStatus changes to OnGoing

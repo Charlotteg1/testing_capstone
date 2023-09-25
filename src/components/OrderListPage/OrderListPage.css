@@ -1,0 +1,7 @@
+.orders-box {
+    background-color: rgba(0,0,0,0.2);
+    border: grey;
+    width:max-content;
+    padding :5px;
+    margin: 5px;
+}

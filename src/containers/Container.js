@@ -16,6 +16,7 @@ const Container = () => {
         const response = await fetch("http://localhost:8080/orders");
         const data = await response.json();
         setOrderList(data);
+        console.log("fetch orders")
     }
     useEffect(()=>{
         fetchOrders();
@@ -41,7 +42,6 @@ const Container = () => {
         const url = `http://localhost:8080/products/decreaseStockLevel?orderId=${currentOrder.id}`;
         const response = await fetch(url, {method: "PATCH",headers: {"Content-Type": "application/json"}})
         console.log("decreased stock level");
-        fetchOrders()
     }
 
     return(
